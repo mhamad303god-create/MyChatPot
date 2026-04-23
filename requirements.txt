@@ -1,4 +1,10 @@
 Django==5.0
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+django-allauth
+channels
+channels_redis
 gunicorn
 whitenoise
 psycopg2-binary
