@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-ptv^zmkxvk(oy$g68p%g177(8=)*-%m3yldpo%jfqs%3=uo7sw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mychatpot.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
