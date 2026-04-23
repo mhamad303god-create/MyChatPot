@@ -1,0 +1,82 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+
+{% block head_title %}إدارة البريد الإلكتروني{% endblock %}
+
+{% block content %}
+<div class="auth-card">
+    <div class="auth-header">
+        <div class="auth-badge">الملف الشخصي</div>
+        <h2>إدارة البريد الإلكتروني</h2>
+        <p>تحكم بعناوين بريدك وتأكيدها بسهولة</p>
+    </div>
+
+    <div class="account-layout">
+        <section class="account-section">
+            <h3>العناوين المسجّلة</h3>
+            {% if emailaddresses %}
+            <form method="post" action="{% url 'account_email' %}" class="stack">
+                {% csrf_token %}
+                <div class="email-list">
+                    {% for emailaddress in emailaddresses %}
+                    <label class="email-item" for="email_radio_{{ forloop.counter }}">
+                        <input id="email_radio_{{ forloop.counter }}" type="radio" name="email"
+                            value="{{ emailaddress.email }}" {% if emailaddress.primary %}checked{% endif %}>
+                        <div class="email-meta">
+                            <span class="email-address">{{ emailaddress.email }}</span>
+                            <div class="email-tags">
+                                {% if emailaddress.primary %}
+                                <span class="tag primary">أساسي</span>
+                                {% endif %}
+                                {% if emailaddress.verified %}
+                                <span class="tag verified">موثّق</span>
+                                {% else %}
+                                <span class="tag unverified">غير موثّق</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <div class="button-row">
+                    <button class="secondaryAction" type="submit" name="action_primary">تعيين كأساسي</button>
+                    <button class="secondaryAction" type="submit" name="action_send">إعادة إرسال التحقق</button>
+                    <button class="dangerAction" type="submit" name="action_remove">حذف البريد</button>
+                </div>
+            </form>
+            {% else %}
+            <p class="muted">لا توجد عناوين بريد مرتبطة بحسابك حتى الآن.</p>
+            {% endif %}
+        </section>
+
+        <section class="account-section">
+            <h3>إضافة بريد جديد</h3>
+            <form method="post" action="{% url 'account_email' %}" class="stack">
+                {% csrf_token %}
+                <div class="fieldWrapper">
+                    <label for="id_email">البريد الإلكتروني</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <div class="field-error">{{ form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <button class="primaryAction" type="submit" name="action_add">إضافة البريد</button>
+            </form>
+        </section>
+    </div>
+
+    <div class="account-menu">
+        <div class="account-menu-title">إعدادات الحساب</div>
+        <div class="account-menu-grid">
+            <a class="menu-link" href="{% url 'account_email' %}">تعديل البريد</a>
+            <a class="menu-link" href="{% url 'account_change_password' %}">تغيير كلمة المرور</a>
+            <a class="menu-link" href="{% url 'socialaccount_connections' %}">الحسابات المرتبطة</a>
+            <form method="post" action="{% url 'account_logout' %}" style="margin:0;">
+                {% csrf_token %}
+                <button class="menu-link danger" type="submit">تسجيل الخروج</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

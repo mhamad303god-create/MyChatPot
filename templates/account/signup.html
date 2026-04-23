@@ -1,0 +1,55 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}إنشاء حساب جديد{% endblock %}
+
+{% block content %}
+<div class="auth-card">
+    <div class="auth-header">
+        <div class="auth-badge">انضم إلينا</div>
+        <h2>ابدأ رحلتك الآن</h2>
+        <p>أنشئ حسابك الجديد وابدأ المحادثة فورًا</p>
+    </div>
+
+    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <ul class="error-list">
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% for field in form %}
+        <div class="fieldWrapper">
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div class="field-error">
+                {{ field.errors.0 }}
+            </div>
+            {% endif %}
+            {% if field.help_text %}
+            <div class="field-help">
+                {{ field.help_text|safe }}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+
+        <button class="primaryAction" type="submit">إنشاء حساب</button>
+    </form>
+
+    <div class="footer-link">
+        <span>لديك حساب بالفعل؟</span>
+        <a href="{% url 'account_login' %}">تسجيل الدخول</a>
+    </div>
+</div>
+{% endblock %}

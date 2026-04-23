@@ -1,0 +1,82 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}تسجيل الدخول{% endblock %}
+
+{% block content %}
+<div class="auth-card">
+    <div class="auth-header">
+        <div class="auth-badge">مرحبًا</div>
+        <h2>مرحبًا بعودتك!</h2>
+        <p>سجّل الدخول للمتابعة إلى المستشار الذكي</p>
+    </div>
+
+    <form class="login" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <ul class="error-list">
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="fieldWrapper">
+            <label>البريد الإلكتروني</label>
+            <input type="email" name="login" placeholder="name@example.com" required id="id_login">
+            {% if form.login.errors %}<div class="field-error">{{ form.login.errors.0 }}</div>{% endif %}
+        </div>
+
+        <div class="fieldWrapper">
+            <label>كلمة المرور</label>
+            <input type="password" name="password" placeholder="••••••••" required id="id_password">
+            {% if form.password.errors %}<div class="field-error">{{ form.password.errors.0 }}</div>{% endif %}
+        </div>
+
+        <div class="secondary-actions">
+            <a href="{% url 'account_reset_password' %}">نسيت كلمة المرور؟</a>
+            <div class="checkbox-container">
+                <input type="checkbox" name="remember" id="id_remember">
+                <label for="id_remember" style="margin:0; cursor:pointer;">تذكّرني</label>
+            </div>
+        </div>
+
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+
+        <button class="primaryAction" type="submit">تسجيل الدخول</button>
+    </form>
+
+    <div class="separator-or">
+        <span>أو المتابعة عبر</span>
+    </div>
+
+    <div class="social-buttons">
+        <form action="/accounts/google/login/" method="post">
+            {% csrf_token %}
+            <button type="submit" class="social-btn google">
+                <span class="icon">G</span> المتابعة عبر Google
+            </button>
+        </form>
+
+        <form action="/accounts/facebook/login/" method="post">
+            {% csrf_token %}
+            <button type="submit" class="social-btn facebook">
+                <span class="icon">f</span> المتابعة عبر Facebook
+            </button>
+        </form>
+    </div>
+
+    <div class="footer-link">
+        <span>ليس لديك حساب؟</span>
+        <a href="{% url 'account_signup' %}">إنشاء حساب جديد</a>
+    </div>
+</div>
+{% endblock %}
+
+
+
+

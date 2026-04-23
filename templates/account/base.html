@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block head_title %}{% endblock %}</title>
+    <!-- Custom Auth CSS -->
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="auth-body">
+    <div class="auth-shell">
+        <aside class="auth-hero" aria-hidden="true">
+            <div class="brand">
+                <div class="brand-mark">✦</div>
+                <div>
+                    <div class="brand-title">حبيب الشعب اليمني</div>
+                    <div class="brand-subtitle">منصة محادثة ذكية بتجربة عربية راقية</div>
+                </div>
+            </div>
+            <div class="hero-highlight">
+                ذكاء أسرع، تصميم أنظف، وتجربة ممتعة على كل الأجهزة.
+            </div>
+            <ul class="hero-points">
+                <li>واجهة عربية أنيقة مع دعم الصور والمحادثات المتعددة</li>
+                <li>خصوصية أفضل وتجربة استخدام سهلة وسريعة</li>
+                <li>نتائج دقيقة مع إمكانية تخصيص التعليمات</li>
+            </ul>
+        </aside>
+
+        <main class="auth-container">
+            <div class="auth-nav">
+                <a class="back-link" href="/">العودة إلى واجهة الدردشة</a>
+            </div>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+
+</html>
