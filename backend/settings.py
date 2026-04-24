@@ -134,7 +134,16 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Gemini API Key
-GEMINI_API_KEY = "AIzaSyArj4tkun-XjrcbU9GfX_YNYj-XUKZ-BuM"
+
+import google.generativeai as genai
+
+# بدلاً من كتابة المفتاح يدوياً، نطلبه من نظام التشغيل
+api_key = os.getenv("GEMINI_API_KEY")
+
+if api_key:
+    genai.configure(api_key=api_key)
+else:
+    print("خطأ: لم يتم العثور على مفتاح API في متغيرات البيئة")
 
 # Authentication Settings
 SITE_ID = 1
