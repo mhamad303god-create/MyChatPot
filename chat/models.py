@@ -28,3 +28,4 @@ class Message(models.Model):
         ordering = ["created_at"]
 
         
+        
