@@ -1,8 +1,18 @@
 from django import forms
 
 class CustomSignupForm(forms.Form):
-    first_name = forms.CharField(max_length=30, label='First Name', required=True, widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
-    last_name = forms.CharField(max_length=30, label='Last Name', required=True, widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
+    first_name = forms.CharField(
+        max_length=30,
+        label='First Name',
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'First Name'})
+    )
+    last_name = forms.CharField(
+        max_length=30,
+        label='Last Name',
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Last Name'})
+    )
 
     def signup(self, request, user):
         user.first_name = self.cleaned_data['first_name']
